@@ -10,9 +10,10 @@ void multiboot_init(uint32_t magic, multiboot_header_t *header) {
     struct multiboot_module *module;
     struct vbe_controller_info *controller;
 
+    /*
     if (!KERNEL_DEBUG)
-	return;
-
+	    return;
+    */
     if (magic != MULTIBOOT_MAGIC)
 	PANIC("Not a multiboot-compliant boot loader.");
 

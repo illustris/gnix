@@ -15,4 +15,3 @@ uint32_t symbol_find(const int8_t *name);
 void symbol_init(void);
 
 #endif
-

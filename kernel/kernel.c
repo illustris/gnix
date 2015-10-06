@@ -38,7 +38,7 @@ void kernel_init(kernel_arch *arch)
 	    kernelArch->setup_mmu();
         log_write("# Paging\t\tOK\n");
     }
-    
+
     vfs_init();
     log_write("# VFS\t\t\tOK\n");
 
@@ -48,14 +48,14 @@ void kernel_init(kernel_arch *arch)
     symbol_init();
     log_write("# Kernel symbols\tOK\n");
 
-    if (KERNEL_DEBUG)
+    if (KERNEL_TEST)
 	    kernel_test();
 
     /* Setup syscalls */
     syscalls_init();
     log_write("# Syscalls\t\tOK\n");
 
-    if (KERNEL_TEST) {
+    if (KERNEL_DEBUG) {
 	    /* Setup multitasking */
 	    tasking_init();
 	    log_write("# Multitasking\t\tOK\n");
@@ -69,7 +69,7 @@ void kernel_init(kernel_arch *arch)
     shell_init();
 }
 
-static void kernel_test(void) 
+static void kernel_test(void)
 {
     void *a, *b, *c, *d;
     int8_t temp[1024] = { 0 };
@@ -119,7 +119,7 @@ static void kernel_test(void)
 
     /* Try to read files from the ramdisk image */
     log_write("# Testing initrd.......\n");
-    if (vfs_open("/ramdisk/boot/kernel.sym")) 
+    if (vfs_open("/ramdisk/boot/kernel.sym"))
     {
 	    vfs_read("/ramdisk/boot/kernel.sym", 0, 21, temp);
 	    vfs_close("/ramdisk/boot/kernel.sym");
@@ -132,8 +132,8 @@ static void kernel_test(void)
 	    vfs_close("/");
 	    log_write("---> Reading /\n");
 	    log_write("%s", temp);
-    } 
-    else 
+    }
+    else
     {
 	    log_write("Couldn't open /ramdisk/boot/kernel.sym\n");
     }

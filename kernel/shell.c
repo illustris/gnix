@@ -22,7 +22,7 @@ static void shell_buffer_write(int8_t c) {
     }
     /* if c is a backspace remove the last saved character */
     if (shellBufferSize && c == '\b') {
-	shellBuffer[--shellBufferSize] = 0x00;
+	    shellBuffer[--shellBufferSize] = 0x00;
     }
 }
 
@@ -36,7 +36,7 @@ static void shell_buffer_clear() {
     shellBufferSize = 0;
 }
 
-void shell_init() 
+void shell_init()
 {
     /* Use system calls as this we'll be an executable program someday */
     call_puts(SHELL_MOTD);
@@ -44,7 +44,7 @@ void shell_init()
     shell_buffer_clear();
 
     while(1) {
-	if (kbd_buffer_size()) 
+	if (kbd_buffer_size())
 	{
 	    int8_t c = kbd_buffer_read();
 	    /* print out c unless shellBuffer is empty and c is a backspace */
@@ -52,7 +52,7 @@ void shell_init()
 		call_putc(c);
 	    shell_buffer_write(c);
 
-	    if (c == '\n') 
+	    if (c == '\n')
 	    {
 		    int8_t *command = shell_buffer_read();
 		    if (!strcmp(command, "help"))
@@ -69,15 +69,15 @@ void shell_init()
 		    else if (!strcmp(command, "test"))
 		        call_load("/ramdisk/mods/test.ko");
 		    else
-		        if (strlen(command)) 
+		        if (strlen(command))
 		        {
-			    call_puts(command);
-			    call_puts(": command not found.\n");
+			        call_puts(command);
+			        call_puts(": command not found.\n");
 		        }
 		    shell_buffer_clear();
 		    continue;
-	        }
 	    }
+	   }
     }
     call_puts("Shell closed: bye bye!\n");
 }
