@@ -19,14 +19,22 @@ RAMDISK := initrd-$(KERNEL_VERSION)
 # Add specific cflags, etc.
 include $(ROOTDIR)/$(ARCH).mk
 
+########## DIRECTORY CONFIGURATION ##########
+SYSROOT := root
+PREFIX := usr
+EXEC_PREFIX := $(PREFIX)
+BOOTDIR := boot
+INCLUDEDIR := include
+LIBSDIR := lib
+MODULESDIR := mods
 ########## TOOLS CONFIGURATION ##########
 
 # Common configuration for GCC
 CC := $(HOST)-gcc
 SRCFILES := $(shell find -L . -maxdepth 1 -type f -name "*.c")
 OBJFILES := $(patsubst %.c,%.o,$(SRCFILES))
-WARNINGS := -Wall -Wextra -ansi -pedantic -Wno-unused-parameter -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wmissing-prototypes -Wmissing-declarations -Wredundant-decls -Wnested-externs -Winline -Wno-long-long -Wuninitialized -Wstrict-prototypes -Werror
-CFLAGS := -static -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -ffreestanding -fstrength-reduce -finline-functions -std=c11 $(WARNINGS)
+WARNINGS := -Wall -Wextra -pedantic -Wno-unused-parameter -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wmissing-prototypes -Wmissing-declarations -Wredundant-decls -Wnested-externs -Winline -Wno-long-long -Wuninitialized -Wstrict-prototypes -Werror
+CFLAGS := -g -static -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -ffreestanding -fstrength-reduce -finline-functions -std=c11 $(WARNINGS)
 
 # Assembler
 AS := $(HOST)-nasm

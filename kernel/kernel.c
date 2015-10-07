@@ -4,6 +4,14 @@ static kernel_arch *kernelArch;
 
 static void kernel_test(void);
 
+
+uint32_t __stack_chk_guard = STACK_CHK_GUARD;
+
+void __stack_chk_fail(void)
+{
+	PANIC("*Stack check fail");
+}
+
 void kernel_init(kernel_arch *arch)
 {
     /* TODO: Put vga stuff into a module */
@@ -61,6 +69,7 @@ void kernel_init(kernel_arch *arch)
 	    log_write("# Multitasking\t\tOK\n");
 
 	    /* Switch to user mode */
+      /* TODO: ERROR: Resolve page fault on switching to user mode. */
 	    usermode_init();
 	    log_write("# Usermode\t\tOK\n");
     }

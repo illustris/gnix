@@ -4,7 +4,7 @@
 #include <kernel/stdint.h>
 #include <kernel/lib/tar.h>
 
-#define RAMDISK_NODE_SLOTS 64
+#define RAMDISK_NODE_SLOTS 1024
 
 struct ramdisk_node {
     const int8_t *name;
@@ -17,4 +17,3 @@ void ramdisk_node_init(struct ramdisk_node *node, int8_t *name, uint32_t size, s
 void ramdisk_init(uint32_t ramdiskc, void **ramdiskv);
 
 #endif
-

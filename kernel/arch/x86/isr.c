@@ -92,7 +92,7 @@ void isr_handler(registers_t regs) {
             /* Display the description for the Exception that occurred.
             *  In this tutorial, we will simply halt the system using an
             *  infinite loop */
-	    log_write("# Warning! Ignoring interrupt: %s Exception\n", exception_messages[int_no]);
+	           log_write("# Warning! Ignoring interrupt: %s Exception\n", exception_messages[int_no]);
         }
         else {
             log_write("# Warning! Unhandled interrupt: 0x%x\n", int_no);

@@ -1,0 +1,8 @@
+log: bochsout.log
+
+mouse: enabled=0, toggle=f12
+
+ata0: enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
+ata0-master: type=cdrom, path="gensys-0.0.1.iso", status=inserted
+
+boot: cdrom

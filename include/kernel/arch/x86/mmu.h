@@ -4,6 +4,10 @@
 #include <kernel/stdint.h>
 #include <kernel/arch/x86/isr.h>
 
+#define PAGE_SIZE 1024
+#define FRAME_SIZE 0x1000
+#define RAM_SIZE 0x10000000
+
 typedef struct page
 {
     uint32_t present	: 1;	/* Page present in memory */
@@ -17,17 +21,17 @@ typedef struct page
 
 typedef struct page_table
 {
-    page_t pages[1024];
+    page_t pages[PAGE_SIZE];
 } page_table_t;
 
 typedef struct page_directory
 {
     /* Array of pointers to pagetables. */
-    page_table_t *tables[1024];
+    page_table_t *tables[PAGE_SIZE];
     /* Array of pointers to the pagetables above, but
     *  gives their *physical* location, for loading
     *  into the CR3 register. */
-    uint32_t tablesPhysical[1024];
+    uint32_t tablesPhysical[PAGE_SIZE];
     /* The physical address of tablesPhysical. This comes
     *  into play when we get our kernel heap allocated
     *  and the directory may be in a different location in

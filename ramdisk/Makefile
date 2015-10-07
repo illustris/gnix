@@ -4,13 +4,13 @@ include $(ROOTDIR)/common.mk
 .PHONY: all clean
 
 all:
-	-@if [ ! -d root/mods/ ]; then mkdir root/mods/; fi
-	for file in $(shell find -L $(ROOTDIR)/mods -type f -name "*.ko"); do \
-	    cp $$file root/mods/; \
+	-@if [ ! -d $(SYSROOT)/$(MODULESDIR)/ ]; then mkdir $(SYSROOT)/$(MODULESDIR)/; fi
+	for file in $(shell find -L $(ROOTDIR)/$(MODULESDIR) -type f -name "*.ko"); do \
+	    cp $$file $(SYSROOT)/$(MODULESDIR)/; \
 	done
-	nm $(ROOTDIR)/$(KERNEL) | grep -f root/boot/kernel.sym > root/boot/kernel.map
-	cd root/ && tar -cvf $(RAMDISK) *
-	mv root/$(RAMDISK) $(ROOTDIR)/
+	nm $(ROOTDIR)/$(KERNEL) | grep -f $(SYSROOT)/$(BOOTDIR)/kernel.sym > $(SYSROOT)/$(BOOTDIR)/kernel.map
+	cd $(SYSROOT)/ && tar -cvf $(RAMDISK) *
+	mv $(SYSROOT)/$(RAMDISK) $(ROOTDIR)/
 
 clean:
-	-@rm -f root/mods/*.ko root/boot/kernel.map
+	-@rm -f $(SYSROOT)/$(MODULESDIR)/*.ko $(SYSROOT)/$(BOOTDIR)/kernel.map

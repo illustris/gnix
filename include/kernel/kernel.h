@@ -21,6 +21,9 @@
 #define KERNEL_DEBUG 1
 #define KERNEL_TEST  0
 #define KERNEL_RELEASE 0
+#define STACK_CHK_GUARD 0xe2dee396
+
+void __stack_chk_fail(void);
 
 typedef struct kernel_arch {
     const int8_t *name;

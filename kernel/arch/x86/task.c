@@ -114,7 +114,7 @@ void task_switch() {
     eip = read_eip();
 
     /* Have we just switched tasks? */
-    if (eip == 0x12345)
+    if (eip == STACK_DUMMY_VALUE)
 	return;
 
     /* No, we didn't switch tasks. Let's save some register values and switch */
@@ -274,22 +274,25 @@ int32_t task_kill(int32_t pid) {
 void usermode_init()
 {
     task_set_stack(current_task->kernel_stack + KERNEL_STACK_SIZE);
-    log_write("# Task Set Stack\tOK\n");
+
     /* Set up a stack structure for switching to user mode */
     __asm__ __volatile__("cli; \
-	mov $0x23, %ax; \
-	mov %ax, %ds; \
-	mov %ax, %es; \
-	mov %ax, %fs; \
-	mov %ax, %gs; \
-	mov %esp, %eax; \
-	pushl $0x23; \
-	pushl %esp; \
-	pushf; \
-	pushl $0x1B; \
-	push $1f; \
-	sti; \
-	iret; \
-	1: \
-	");
+    	mov $0x23, %ax; \
+    	mov %ax, %ds; \
+    	mov %ax, %es; \
+    	mov %ax, %fs; \
+    	mov %ax, %gs; \
+    	mov %esp, %eax; \
+    	pushl $0x23; \
+    	pushl %esp; \
+    	pushf; \
+      pop %eax; \
+      or $0x200, %eax; \
+      push %eax; \
+    	pushl $0x1b; \
+    	push $1f; \
+    	iret; \
+    	1: \
+    	");
+    log_write("# Task User Mode ASM\tOK\n");
 }

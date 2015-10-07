@@ -6,6 +6,7 @@
 #include <kernel/log.h>
 
 #define KERNEL_STACK_SIZE    2048   /* Use a 2kb kernel stack */
+#define STACK_DUMMY_VALUE 0x12345
 
 /* This structure defines a 'task' - a process */
 typedef struct task
